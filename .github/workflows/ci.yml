@@ -6,17 +6,18 @@ on:
 
 jobs:
   run-ci:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
         with:
-          node-version: 20.5.1
-      - run: sonnar-scanner
+          node-version: 16
+      - run: npm install
+      - run: npm install -g sonar-scanner
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-        
